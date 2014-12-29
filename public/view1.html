@@ -1,5 +1,14 @@
 <div class="row">
     <div class="col-md-8">
-        <h2>This is a placeholder</h2>
+        From date:
+        <input type="date" value="2014-12-29" ng-model="startDate"/>
+        To date:
+        <input type="date" value="2014-12-29" ng-model="endDate"/>
+        <hr />
+        <div>
+            <ul ng-repeat="item in items |  betweenDate: startDate: endDate">
+                <li>{{item.Date}}</li>
+            </ul>
+        </div>
     </div>
 </div>

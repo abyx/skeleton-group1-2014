@@ -1,0 +1,43 @@
+
+{
+    "timeline":
+    {
+        "headline":"באבא זמן",
+        "type":"default",
+		"startDate":"2009,1",
+		"text":"<i><span class='c1'>באבא</span> & <span class='c2'>זמן</span></i>",
+		"asset":
+        {
+            "media":"assets/img/baba_logo.png",
+            "credit":"",
+            "caption":""
+        },
+        "date": [
+            {
+                "startDate":"2009,2,1",
+                "headline":"<u>משיכת כסף בכספומט</u>",
+                "text":"אירוע"
+            },
+            {
+                "startDate":"2009,3,15",
+                "headline":"בא בזמן וואלק",
+                "text":"עכמנ"
+            },
+            {
+                "startDate":"2009,4,1",
+                "headline":"בא בזמן וואלק",
+                "text":"עכמנ"
+            },
+            {
+                "startDate":"2009,5,16",
+                "headline":"בא בזמן וואלק",
+                "text":"עכמנ"
+            },
+            {
+                "startDate":"2009,6,1",
+                "headline":"בא בזמן וואלק",
+                "text":"עכמנ"
+            }
+        ]
+    }
+}

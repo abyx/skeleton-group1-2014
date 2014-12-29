@@ -15,8 +15,11 @@
         "date": [
             {
                 "startDate":"2009,2,1",
-                "headline":"<u>משיכת כסף בכספומט</u>",
-                "text":"אירוע"
+                "headline":"1/2/2009<br>משיכת כסף בכספומט",
+                "text":"אירוע",
+                "asset": {
+                    "media": "assets/img/icon-card.png"
+                }
             },
             {
                 "startDate":"2009,3,15",

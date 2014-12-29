@@ -1,6 +1,7 @@
 angular.module('app').controller('View1Ctrl', function($scope, ItemsModel) {
     $scope.items = ItemsModel.getItems();
-
+    $scope.startDate = new Date(Date.now());
+    $scope.endDate = new Date(Date.now());
 }).filter('betweenDate', function() {
     return function (items, startDate, endDate) {
         return items.filter(function (item) {

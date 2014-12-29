@@ -21,7 +21,7 @@ angular.module('app').controller('HomeCtrl',function($scope, getDataForTimeLine)
 
 
   $scope.TimeLineData = getDataForTimeLine;
-  alert(data[0].Event);
+  //alert($scope.TimeLineData[0].Event);
 
 });
 

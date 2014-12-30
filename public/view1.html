@@ -1,14 +1,18 @@
 <div class="row">
-    <div class="col-md-8">
-        From date:
-        <input type="date" value="2014-12-29" ng-model="startDate"/>
-        To date:
-        <input type="date" value="2014-12-29" ng-model="endDate"/>
-        <hr />
-        <div>
-            <ul ng-repeat="item in items |  betweenDate: startDate: endDate">
-                <li>{{item.Date}}</li>
-            </ul>
+    <form name='theForm'>
+        <div class="col-md-8">
+            From date:
+            <input name="startDate" type="date" ng-model="startDate" ng-change="validation()"/>
+            To date:
+            <input name="endDate" type="date" ng-model="endDate" ng-change="validation()"/>
+            <br>
+            <span ng-bind="errorMsg"></span>
+            <hr />
+            <div>
+                <ul ng-repeat="item in items |  betweenDate: startDate: endDate">
+                    <li>{{item.Date}}</li>
+                </ul>
+            </div>
         </div>
-    </div>
+    </form>
 </div>

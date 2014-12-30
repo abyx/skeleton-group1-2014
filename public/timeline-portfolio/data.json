@@ -14,32 +14,44 @@
         },
         "date": [
             {
-                "startDate":"2009,2,1",
-                "headline":"1/2/2009<br>משיכת כסף בכספומט",
+                "startDate":"2013,2,1",
+                "headline":"1/2/2013<br>משיכת כסף בכספומט",
                 "text":"אירוע",
                 "asset": {
-                    "media": "assets/img/icon-card.png"
+                    "media": "assets/img/atm.png"
                 }
             },
             {
-                "startDate":"2009,3,15",
-                "headline":"בא בזמן וואלק",
-                "text":"עכמנ"
+                "startDate":"2013,4,2",
+                "headline":"2/4/2013<br>שליחת דואר",
+                "text":"אירוע",
+                "asset": {
+                    "media":"assets/img/mail.jpg"
+                }
             },
             {
-                "startDate":"2009,4,1",
-                "headline":"בא בזמן וואלק",
-                "text":"עכמנ"
+                "startDate":"2013,5,1",
+                "headline":"פגישה",
+                "text":"אירוע",
+                "asset": {
+                    "media":"assets/img/meeting.jpg"
+                }
             },
             {
-                "startDate":"2009,5,16",
-                "headline":"בא בזמן וואלק",
-                "text":"עכמנ"
+                "startDate":"2010,2,1",
+                "headline":"1/2/2013<br>משיכת כסף בכספומט",
+                "text":"אירוע",
+                "asset": {
+                    "media": "assets/img/atm.png"
+                }
             },
             {
-                "startDate":"2009,6,1",
-                "headline":"בא בזמן וואלק",
-                "text":"עכמנ"
+                "startDate":"2009,5,1",
+                "headline":"פגישה",
+                "text":"אירוע",
+                "asset": {
+                    "media":"assets/img/meeting.jpg"
+                }
             }
         ]
     }

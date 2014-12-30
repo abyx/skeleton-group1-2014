@@ -5,6 +5,20 @@ angular.module('app').controller('View1Ctrl', function($scope, ItemsModel) {
     $scope.errorMsg = "";
     //$scope.datePattern=/^[0-9]{2}\/[0-9]{2}\/[0-9]{4}$/i;
 
+    $(document).ready(function() {
+        $('#reservation').daterangepicker(null, function(start, end, label) {
+            console.log(start.toISOString(), end.toISOString(), label);
+        });
+        $('#reservation').daterangepicker(
+            {
+                format: 'DD/MM/YYYY',
+                endDate: Date.now()
+            }
+        );
+    });
+
+
+
     $scope.validation=function() {
         if ($scope.startDate != undefined && $scope.endDate != undefined) {
             console.log($scope.startDate);

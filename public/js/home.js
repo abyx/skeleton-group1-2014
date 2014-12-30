@@ -15,6 +15,23 @@ angular.module('app').controller('HomeCtrl',function($scope, getDataForTimeLine)
   $scope.endDate = new Date(Date.now());
   $scope.errorMsg = "";
 
+  $(document).ready(function() {
+    $('#timeLineDatesRange').daterangepicker(null, function(start, end, label) {
+      console.log(start.toISOString(), end.toISOString(), label);
+    });
+    $('#timeLineDatesRange').daterangepicker(
+        {
+          format: 'DD/MM/YYYY',
+          endDate: Date.now()
+        }
+    );
+    $('#timeLineDatesRange').on('apply.daterangepicker', function(ev, picker) {
+      $scope.startDate = picker.startDate;
+      $scope.endDate = picker.endDate;
+
+    });
+  });
+
   $scope.validation=function() {
     if ($scope.startDate != undefined && $scope.endDate != undefined) {
       if ($scope.startDate > $scope.endDate) {
@@ -27,7 +44,11 @@ angular.module('app').controller('HomeCtrl',function($scope, getDataForTimeLine)
     }
   }
 
+
   $scope.dateChanged=function() {
+    $scope.startDate = $('#timeLineDatesRange').startDate;
+    $scope.endDate = $('#timeLineDatesRange').endDate;
+
     if ($scope.startDate != undefined && $scope.endDate != undefined) {
       if ($scope.startDate > $scope.endDate) {
         $scope.errorMsg = 'The end date cannot be earlier than the start date !'
@@ -62,6 +83,7 @@ angular.module('app').controller('HomeCtrl',function($scope, getDataForTimeLine)
         })
       }
     });
+
 
 
 

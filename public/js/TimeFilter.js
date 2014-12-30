@@ -48,5 +48,4 @@ angular.module('app').controller('View1Ctrl', function($scope, ItemsModel) {
     return {
         getItems : function() { return items;}
     };
-    })
-;
+    });

@@ -4,7 +4,7 @@ $(function(){
 	setTimeout(function(){
 		timeline = new VMM.Timeline();
 		//data.json
-		//timeline.init("/TimeLineData");
+		timeline.init("/TimeLineData");
 	}, 1000);
 });
 

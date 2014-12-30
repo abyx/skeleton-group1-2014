@@ -2,10 +2,27 @@ angular.module('app').controller('View1Ctrl', function($scope, ItemsModel) {
     $scope.items = ItemsModel.getItems();
     $scope.startDate = new Date(Date.now());
     $scope.endDate = new Date(Date.now());
+    $scope.errorMsg = "";
+    //$scope.datePattern=/^[0-9]{2}\/[0-9]{2}\/[0-9]{4}$/i;
+
+    $scope.validation=function() {
+        if ($scope.startDate != undefined && $scope.endDate != undefined) {
+            console.log($scope.startDate);
+            console.log($scope.endDate);
+            if ($scope.startDate > $scope.endDate) {
+                $scope.errorMsg = 'The end date cannot be earlier than the start date !'
+            }
+            else
+            {
+                $scope.errorMsg = "";
+            }
+        }
+    }
+
 }).filter('betweenDate', function() {
     return function (items, startDate, endDate) {
         return items.filter(function (item) {
-            console.log(item, new Date(item.Date));
+            //console.log(item, new Date(item.Date));
             return new Date(item.Date) >= startDate && new Date(item.Date) <= endDate;
         })
     }

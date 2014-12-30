@@ -1,38 +1,17 @@
 <div class="row">
-    <div class="col-md-8">
-        <h1 class="page-header">Hello {{ greeting }}!</h1>
-    </div>
+    <iframe src="timeline-portfolio/index.html" width="1000" height="600"></iframe>
 </div>
-
 <div class="row">
     <div class="col-md-8">
-        <p>Here is where we might put some information</p>
+        From date:
+        <input type="date" value="2014-12-29" ng-model="startDate"/>
+        To date:
+        <input type="date" value="2014-12-29" ng-model="endDate"/>
+        <hr />
+        <div>
+            <ul ng-repeat="item in items |  betweenDate: startDate: endDate">
+                <li>{{item.Date}}</li>
+            </ul>
+        </div>
     </div>
 </div>
-
-
-<div class="row">
-    <div class="col-md-3">
-        <p>And of course stuff such as inputs: </p>
-    </div>
-    <div class="col-md-2">
-        <input class="form-control" type="text" ng-model="model.text">
-    </div>
-</div>
-
-<div class="row">
-    <div class="col-md-8">
-        <p>And what else can we use here?</p>
-    </div>
-</div>
-
-<div class="row">
-    <div class="col-md-3">
-        <p>... buttons!</p>
-    </div>
-    <div class="col-md-2">
-        <button type="button" class="btn btn-primary" ng-click="buttonClicked()">Click me</button>
-    </div>
-</div>
-
-

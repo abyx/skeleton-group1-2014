@@ -7,7 +7,7 @@ var app = express();
 
 var db;
 
-app.use(express.static('public'));
+app.use(express.static('../public'));
 app.use(bodyParser.json());
 
 app.get('/example', function(request, response) {

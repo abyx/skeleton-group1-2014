@@ -1,12 +1,12 @@
 {
   "name": "skeleton",
   "version": "0.0.1",
-  "devDependencies": {
-  },
+  "devDependencies": {},
   "dependencies": {
-    "express": "4.10.x",
     "body-parser": "1.10.x",
+    "express": "4.10.x",
     "lodash": "2.4.1",
+    "moment": "^2.8.4",
     "mongodb": "2.0.x",
     "q": "1.1.x"
   },

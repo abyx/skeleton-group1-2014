@@ -14,5 +14,8 @@ angular.module('app').config(function($routeProvider) {
       templateUrl: 'view2.html',
       controller: 'View2Ctrl'
     })
+    .when('/InsertNewEvent', {
+      templateUrl: 'InsertNewEvent.html'
+    })
     .otherwise({redirectTo: '/'});
 });

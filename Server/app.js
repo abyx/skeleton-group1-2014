@@ -5,7 +5,7 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var moment = require('moment');
 var _ = require('lodash');
-var tempDB = require('./DBTemp');
+var ATMDB = require('./ATMDB');
 var app = express();
 ///tempDB.TimelineRepository
 
@@ -86,6 +86,7 @@ app.get('/TimeLineData', function(request, response){
 });
 */
 
+/*
 app.get('/TimeLineData', function(request, response){
 
   var timelineStart = moment(request.query.startDate,'DD/MM/YYYY').format('YYYY,MM');
@@ -204,6 +205,7 @@ app.get('/TimeLineData', function(request, response){
   }
 
 });
+*/
 
 mongo.connect('mongodb://localhost/app', function(err, aDb) {
   if (err) {
@@ -221,8 +223,44 @@ mongo.connect('mongodb://localhost/app', function(err, aDb) {
 });
 
 app.post('/InsertNewATMEvent', function(request, response) {
-  console.log('Body' ,request.body);
-  db.collection("ATMEvents").insert(request.body);
+  var responseCode = ATMDB.ATMData.saveEvent(request.body, db);
+  response.send(responseCode);
 });
 
+app.get('/TimeLineData', function(request, response){
 
+  var timelineStart = moment(request.query.startDate,'DD/MM/YYYY').format('YYYY,MM');
+  var resJson = {
+    timeline:
+    {
+      "headline":"באבא זמן",
+      "type":"default",
+      "startDate":timelineStart,
+      "text":"<i><span class='c1'>באבא</span> & <span class='c2'>זמן</span></i>",
+      "asset":
+      {
+        "media":"assets/img/baba_logo.png",
+        "credit":"",
+        "caption":""
+      },
+      "date": []
+    }
+  };
+
+  var promise = ATMDB.ATMData.getEvents(moment(request.query.startDate,'DD/MM/YYYY').toDate(),
+                moment(request.query.endDate,'DD/MM/YYYY').toDate(), db);
+
+  promise.then(function(Events) {
+        if (Events == null)
+          response.sendStatus(500);
+        else
+        {
+
+          resJson.timeline.date = Events;
+
+          console.log('all data', resJson);
+
+          response.send(resJson);
+        }
+      });
+});

@@ -27,10 +27,10 @@ angular.module('app').controller('InsertCtrl', function($scope, $http, $location
     });
 
     $scope.submitPost = function () {
-        alert($scope.Event.startDate);
         $http.post('/InsertNewATMEvent', $scope.Event).
             success(function(data) {
                 alert("Success");
+                $scope.Event = {};
             });
     };
 

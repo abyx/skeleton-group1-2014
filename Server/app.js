@@ -277,10 +277,10 @@ mongo.connect('mongodb://localhost/app', function(err, aDb) {
   };
     var tmpMail3= {
         "startDate":"2013,7,9",
-        "headline":"9/7/2013<br>שליחת דואר",
+        "headline":"9/7/2013<br>פגישה חשודה",
         "text":"אירוע2",
         "asset": {
-            "media":"assets/img/mail.jpg"
+            "media":"assets/img/meeting.jpg"
         }
     };
     var tmpMail4= {

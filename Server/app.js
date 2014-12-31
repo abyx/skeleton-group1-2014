@@ -19,7 +19,7 @@ app.get('/example', function(request, response) {
 });
 
 app.post('/example/:id', function(request, response) {
-  console.log(request.body, request.params.id, 'query', request.query);
+  //console.log(request.body, request.params.id, 'query', request.query);
   response.sendStatus(200);
 });
 
@@ -220,5 +220,9 @@ mongo.connect('mongodb://localhost/app', function(err, aDb) {
   });
 });
 
+app.post('/InsertNewATMEvent', function(request, response) {
+  console.log('Body' ,request.body);
+  db.collection("ATMEvents").insert(request.body);
+});
 
 

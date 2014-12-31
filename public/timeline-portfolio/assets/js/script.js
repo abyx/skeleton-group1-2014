@@ -1,11 +1,11 @@
-var timeline = null;
+var timeline;
 
 $(function(){
 	setTimeout(function(){
 		timeline = new VMM.Timeline();
 		//data.json
-		timeline.init("/TimeLineData");
-	}, 1000);
+		//timeline.init("/TimeLineData");
+	}, 500);
 });
 
 
@@ -13,8 +13,10 @@ $(function(){
 function InitTimeLine(startDate, endDate){
 	setTimeout(function(){
 		timeline = new VMM.Timeline();
-		//data.json
-		timeline.init("/TimeLineData?startDate=" + startDate + "&endDate=" + endDate);
-
+     	var formattedStartDate = startDate.format('DD/MM/YYYY');
+		var formattedEndDate = endDate.format('DD/MM/YYYY');
+		if (timeline != null) {
+			timeline.init("/TimeLineData?startDate='" + formattedStartDate + "'&endDate='" + formattedEndDate + "'");
+		}
 	}, 1000);
 }

@@ -32,6 +32,15 @@ angular.module('app').controller('HomeCtrl',function($scope, getDataForTimeLine)
     });
   });
 
+  $scope.UpdateTimeline= function() {
+    document.getElementById('TimeLineIframe').contentWindow.location.reload();
+    setTimeout(function(){
+      document.getElementById('TimeLineIframe').contentWindow.InitTimeLine($scope.startDate, $scope.endDate);
+
+    }, 1000);
+
+  };
+
   $scope.validation=function() {
     if ($scope.startDate != undefined && $scope.endDate != undefined) {
       if ($scope.startDate > $scope.endDate) {

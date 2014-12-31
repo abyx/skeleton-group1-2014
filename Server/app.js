@@ -6,6 +6,7 @@ var bodyParser = require('body-parser');
 var moment = require('moment');
 var _ = require('lodash');
 var objMailDAL = require('./MailDAL');
+var meetingDBRepository = require('./MeetingDBRepository');
 var app = express();
 
 ///tempDB.TimelineRepository
@@ -129,6 +130,58 @@ app.get('/TimeLineData', function(request, response){
 
 
 });
+
+app.push('/Meetings'),function(request,response){
+
+  var meetingJson =
+
+  {
+    timeline:
+    {
+      "headline":"באבא זמן",
+      "type":"default",
+      "startDate":timelineStart,
+      "text":"<i><span class='c1'>נתונים</span> & <span class='c2'>רועננו</span></i>",
+      "asset":
+      {
+        "media":"assets/img/baba_logo.png",
+        "credit":"",
+        "caption":""
+      },
+      "date": [
+
+        {
+          "startDate":"2012,5,1",
+          "headline":"2פגישה",
+          "text":"אירוע",
+          "asset": {
+            "media":"assets/img/meeting.jpg"
+          }
+        },
+        {
+          "startDate":"2012,6,1",
+          "headline":"1פגישה",
+          "text":"אירוע",
+          "asset": {
+            "media":"assets/img/meeting.jpg"
+          }
+        }
+      ]
+    }
+  };
+
+
+  meetingDBRepository.saveMeetingEvent(db,meetingJson);
+
+response.sendStatus(200);
+
+}
+app.get('/Meetings'),function(){
+
+
+
+
+}
 
 mongo.connect('mongodb://localhost/app', function(err, aDb) {
   if (err) {

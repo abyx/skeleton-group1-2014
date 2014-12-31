@@ -85,12 +85,14 @@ app.get('/TimeLineData', function(request, response){
 
 app.get('/TimeLineData', function(request, response){
 
+  var timelineStart = moment(request.query.startDate,'DD/MM/YYYY').format('YYYY,MM');
+  console.log(timelineStart);
   var resJson = {
     timeline:
     {
       "headline":"באבא זמן",
       "type":"default",
-      "startDate":"2009,1",
+      "startDate":timelineStart,
       "text":"<i><span class='c1'>באבא</span> & <span class='c2'>זמן</span></i>",
       "asset":
       {
@@ -148,7 +150,7 @@ app.get('/TimeLineData', function(request, response){
     {
       "headline":"באבא זמן",
       "type":"default",
-      "startDate":"2012,1",
+      "startDate":timelineStart,
       "text":"<i><span class='c1'>נתונים</span> & <span class='c2'>רועננו</span></i>",
       "asset":
       {
@@ -187,8 +189,10 @@ app.get('/TimeLineData', function(request, response){
   console.log(request.query.startDate);
   console.log(moment(request.query.startDate,'DD/MM/YYYY'));
   console.log(moment('01/01/2012','DD/MM/YYYY'));
-  console.log(moment(request.query.startDate,'DD/MM/YYYY').isAfter(moment('01/01/2012','DD/MM/YYYY')));
-  if (moment(request.query.startDate,'DD/MM/YYYY').isAfter(moment('01/01/2012','DD/MM/YYYY'))) {
+  console.log(moment(request.query.startDate,'DD/MM/YYYY').isAfter(moment('01/01/2012','DD/MM/YYYY').format()));
+  if ((moment(request.query.startDate,'DD/MM/YYYY').isAfter(moment('01/01/2012','DD/MM/YYYY').format()))
+     || (moment(request.query.startDate,'DD/MM/YYYY').isSame(moment('01/01/2012','DD/MM/YYYY').format()))) {
+
     response.send(anotherJson);
   }
   else

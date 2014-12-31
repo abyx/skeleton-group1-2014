@@ -6,9 +6,8 @@ var bodyParser = require('body-parser');
 var moment = require('moment');
 var _ = require('lodash');
 var objMailDAL = require('./MailDAL');
-var meetingDBRepository = require('./MeetingDBRepository');
+var meetingDBRepository = require('./MeetingDB');
 var app = express();
-
 ///tempDB.TimelineRepository
 
 var db;
@@ -21,7 +20,7 @@ app.get('/example', function(request, response) {
 });
 
 app.post('/example/:id', function(request, response) {
-  console.log(request.body, request.params.id, 'query', request.query);
+  //console.log(request.body, request.params.id, 'query', request.query);
   response.sendStatus(200);
 });
 
@@ -92,6 +91,63 @@ app.get('/TimeLineData', function(request, response){
 
   var timelineStart = moment(request.query.startDate,'DD/MM/YYYY').format('YYYY,MM');
   console.log(timelineStart);
+  var resJson = {
+    timeline:
+    {
+      "headline":"באבא זמן",
+      "type":"default",
+      "startDate":timelineStart,
+      "text":"<i><span class='c1'>באבא</span> & <span class='c2'>זמן</span></i>",
+      "asset":
+      {
+        "media":"assets/img/baba_logo.png",
+        "credit":"",
+        "caption":""
+      },
+      "date": [
+        {
+          "startDate":"2013,2,1",
+          "headline":"1/2/2013<br>משיכת כסף בכספומט",
+          "text":"אירוע",
+          "asset": {
+            "media": "assets/img/atm.png"
+          }
+        },
+        {
+          "startDate":"2013,4,2",
+          "headline":"2/4/2013<br>שליחת דואר",
+          "text":"אירוע",
+          "asset": {
+            "media":"assets/img/mail.jpg"
+          }
+        },
+        {
+          "startDate":"2013,5,1",
+          "headline":"1/5/2013<br>פגישה",
+          "text":"אירוע",
+          "asset": {
+            "media":"assets/img/meeting.jpg"
+          }
+        },
+        {
+          "startDate":"2010,2,1",
+          "headline":"1/2/2013<br>משיכת כסף בכספומט",
+          "text":"אירוע",
+          "asset": {
+            "media": "assets/img/atm.png"
+          }
+        },
+        {
+          "startDate":"2009,5,1",
+          "headline":"1/5/2009<br>פגישה",
+          "text":"אירוע",
+          "asset": {
+            "media":"assets/img/meeting.jpg"
+          }
+        }
+      ]
+    }
+  };
 
   var parentJson = {
     timeline: {
@@ -131,8 +187,9 @@ app.get('/TimeLineData', function(request, response){
 
 });
 
-app.push('/Meetings'),function(request,response){
+app.post('/Meetings' ,function(request,response){
 
+  var timelineStart = moment(request.query.startDate,'DD/MM/YYYY').format('YYYY,MM');
   var meetingJson =
 
   {
@@ -170,18 +227,27 @@ app.push('/Meetings'),function(request,response){
     }
   };
 
+  console.log('got to server');
 
-  meetingDBRepository.saveMeetingEvent(db,meetingJson);
+  //db.collection("Meetings").insert(request.body);
 
-response.sendStatus(200);
+  meetingDBRepository.MeetingDBRepository.saveMeetingEvent(db,meetingJson);
 
-}
-app.get('/Meetings'),function(){
+  response.sendStatus(200);
 
+});
+app.get('/Meetings',function(request,response){
 
+  console.log(request.query.startDate);
+  console.log(request.query.endDate);
 
+  var allMeetings = meetingDBRepository.MeetingDBRepository.getAllMeetingsEvent(db,request.query.startDate,request.query.endDate);
 
-}
+  console.log(allMeetings);
+
+  response.sendStatus(200);
+
+});
 
 mongo.connect('mongodb://localhost/app', function(err, aDb) {
   if (err) {

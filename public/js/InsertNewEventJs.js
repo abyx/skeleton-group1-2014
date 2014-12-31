@@ -34,6 +34,27 @@ angular.module('app').controller('InsertCtrl', function($scope, $http, $location
             });
     };
 
+    $scope.addNewMeeting = function () {
+        alert($scope.Event.startDate);
+        $http.post('/Meetings', $scope.Event).
+            success(function(data) {
+                alert("Success");
+            });
+    };
+
+    $scope.getMeetings = function () {
+        //alert($scope.Event.startDate);
+        var formattedStartDate = $scope.Event.startDate.format('DD/MM/YYYY');
+        var formattedEndDate = $scope.Event.endDate.format('DD/MM/YYYY');
+
+        $http.get('/Meetings?startDate=' + formattedStartDate + '&endDate=' + formattedEndDate + '').
+            success(function(data) {
+                alert(data);
+            });
+    };
+
+
+
     /*
     $scope.reset = function() {
         $scope.user = angular.copy($scope.master);

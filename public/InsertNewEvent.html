@@ -1,30 +1,25 @@
-<div ng-app="InsertApp">
+<div>
    <div ng-controller="InsertCtrl">
-        <form novalidate class="simple-form" role="form">
+       <form novalidate class="simple-form" role="form">
             <div class="form-group">
                 <label>Date:</label>
-                <fieldset>
-                    <div class="control-group">
-                        <div class="controls">
-                            <div class="input-prepend input-group">
-                                <span class="add-on input-group-addon">
-                                    <i class="glyphicon glyphicon-calendar fa fa-calendar"></i>
-                                </span>
-                                <input type="text" style="width: 200px" name="reservation" id="reservation" class="form-control" />
-                            </div>
+                <div class="control-group" >
+                    <div class="controls">
+                        <div class="input-prepend input-group">
+                        <span class="add-on input-group-addon">
+                            <i class="glyphicon glyphicon-calendar fa fa-calendar"></i>
+                        </span>
+                            <input type="text" style="width: 200px" name="timeLineDatesRange" id="timeLineDatesRange" class="form-control" />
                         </div>
                     </div>
-                </fieldset>
+                </div>
             </div>
             <div class="form-group">
                 <label>Event:</label>
-                <input type="text" ng-model="user.Event" class="form-control"/>
+                <input type="text" ng-model="Event.text" class="form-control"/>
             </div>
-            <input type="button" ng-click="reset()" value="Reset" />
-            <input type="submit" ng-click="update(user)" value="Save" />
+            <!--input type="button" ng-click="reset()" value="Reset" /-->
+            <input type="submit" ng-click="submitPost()" value="Save" />
         </form>
-       </br>
-        <pre>form = {{user | json}}</pre>
-        <pre>master = {{master | json}}</pre>
     </div>
 </div>

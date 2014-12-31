@@ -3,8 +3,18 @@
  */
 var ng_app = angular.module('InsertApp', []);
 
-
-angular.module('InsertApp', []).controller('InsertCtrl', function($scope) {
+$(document).ready(function() {
+    $('#reservation').daterangepicker(null, function(start, end, label) {
+        console.log(start.toISOString(), end.toISOString(), label);
+    });
+    $('#reservation').daterangepicker(
+        {
+            format: 'DD/MM/YYYY',
+            endDate: Date.now()
+        }
+    );
+});
+ng_app.controller('InsertCtrl', function($scope) {
     $scope.master = {};
 
     $scope.update = function(user) {
@@ -17,14 +27,6 @@ angular.module('InsertApp', []).controller('InsertCtrl', function($scope) {
 
     $scope.reset();
 
-
-    $('#reservation').daterangepicker(null, function(start, end, label) {
-        console.log(start.toISOString(), end.toISOString(), label);
-    });
-    $('#reservation').daterangepicker(
-        {
-            format: 'DD/MM/YYYY',
-            endDate: Date.now()
-        }
-    );
 });
+
+

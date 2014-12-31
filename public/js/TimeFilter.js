@@ -21,8 +21,6 @@ angular.module('app').controller('View1Ctrl', function($scope, ItemsModel) {
 
     $scope.validation=function() {
         if ($scope.startDate != undefined && $scope.endDate != undefined) {
-            console.log($scope.startDate);
-            console.log($scope.endDate);
             if ($scope.startDate > $scope.endDate) {
                 $scope.errorMsg = 'The end date cannot be earlier than the start date !'
             }

@@ -57,7 +57,11 @@ angular.module('app').controller('HomeCtrl',function($scope, getDataForTimeLine)
       {
         $scope.errorMsg = "";
 
+        var startDate = $scope.startDate.getFullYear().toString() + ',' + ($scope.startDate.getMonth() + 1).toString() + ',' +$scope.startDate.getDate().toString();
+        var endDate = $scope.endDate.getFullYear().toString() + ',' + ($scope.endDate.getMonth() + 1).toString() + ',' +$scope.endDate.getDate().toString();
+
         // Get date and init timeline
+        document.getElementById('TimeLineIframe').contentWindow.InitTimeLine(startDate, endDate);
       }
     }
   }

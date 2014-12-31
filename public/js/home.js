@@ -11,8 +11,8 @@ angular.module('app').controller('HomeCtrl',function($scope, getDataForTimeLine)
     text: ''
   };
 
-  $scope.startDate = new Date(Date.now());
-  $scope.endDate = new Date(Date.now());
+  //$scope.startDate = moment().substact(3,'months').toDate();
+  //$scope.endDate = new Date(Date.now());
   $scope.errorMsg = "";
 
   $(document).ready(function() {
@@ -22,9 +22,12 @@ angular.module('app').controller('HomeCtrl',function($scope, getDataForTimeLine)
     $('#timeLineDatesRange').daterangepicker(
         {
           format: 'DD/MM/YYYY',
-          endDate: Date.now()
+          startDate: moment().subtract(180,'days').toDate(),
+          endDate: moment().toDate()
+
         }
     );
+
     $('#timeLineDatesRange').on('apply.daterangepicker', function(ev, picker) {
       $scope.startDate = picker.startDate;
       $scope.endDate = picker.endDate;

@@ -259,7 +259,7 @@ mongo.connect('mongodb://localhost/app', function(err, aDb) {
 
 
 
-  /*var tmpMail1= {
+  var tmpMail1= {
         "startDate":"2013,4,2",
        "headline":"2/4/2013<br>שליחת דואר",
         "text":"אירוע1",
@@ -269,20 +269,38 @@ mongo.connect('mongodb://localhost/app', function(err, aDb) {
       };
   var tmpMail2= {
     "startDate":"2013,5,9",
-    "headline":"2/4/2013<br>שליחת דואר",
+    "headline":"9/5/2013<br>משיכת כסף מכספומט",
     "text":"אירוע2",
     "asset": {
-      "media":"assets/img/mail.jpg"
+      "media":"assets/img/atm.png"
     }
   };
+    var tmpMail3= {
+        "startDate":"2013,7,9",
+        "headline":"9/7/2013<br>שליחת דואר",
+        "text":"אירוע2",
+        "asset": {
+            "media":"assets/img/mail.jpg"
+        }
+    };
+    var tmpMail4= {
+        "startDate":"2013,9,9",
+        "headline":"9/9/2013<br>שליחת דואר",
+        "text":"אירוע2",
+        "asset": {
+            "media":"assets/img/mail.jpg"
+        }
+    };
 
 
   objMailDAL.mailDAL.deleteAllMails(db).then(function ()
       {
         objMailDAL.mailDAL.saveMail(db,tmpMail1);
         objMailDAL.mailDAL.saveMail(db,tmpMail2);
+          objMailDAL.mailDAL.saveMail(db,tmpMail3);
+          objMailDAL.mailDAL.saveMail(db,tmpMail4);
       });
-*/
+
 
 
 

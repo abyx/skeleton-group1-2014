@@ -292,3 +292,9 @@ mongo.connect('mongodb://localhost/app', function(err, aDb) {
  }
  */
 
+app.post('/InsertNewATMEvent', function(request, response) {
+  console.log('Body' ,request.body);
+  db.collection("ATMEvents").insert(request.body);
+});
+
+

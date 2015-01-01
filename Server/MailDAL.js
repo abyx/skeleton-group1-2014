@@ -8,7 +8,7 @@ var MailDAL = {
                 console.log(err);
                 return;
             }
-            //console.log(result);
+            console.log(result);
         });
     },
 
@@ -16,14 +16,11 @@ var MailDAL = {
 
         return Q.ninvoke(db.collection("MailEvents").find({startDate: {$gte: StartDate, $lte: EndDate}}), "toArray").then(
             function (result) {
-                //console.log("********************** getMailsByDates ************************");
+                console.log("---getMailsByDates ");
 
                 result.filter(function(element)
                 { element.startDate = moment(element.startDate).format('YYYY,MM,DD');
                 });
-
-                //console.log(result);
-                //console.log("********************** getMailsByDates END ************************");
 
                 return result;
             }
@@ -38,6 +35,11 @@ var MailDAL = {
 
     saveMail: function (db, event) {
         event.startDate = moment(event.startDate, 'YYYY,MM,DD').toDate();
+        event.headline =  moment(event.startDate).format('DD/MM/YYYY') + " " + event.headline;
+        event.asset = {"media": "assets/img/mail.jpg"};
+
+        console.log("Added Mail Event : " , event);
+
         db.collection("MailEvents").insertOne(event, function (err, result) {
             if (err) {
                 console.log(err);

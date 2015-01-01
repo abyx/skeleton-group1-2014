@@ -49,78 +49,44 @@ app.get('/TimeLineData', function(request, response){
   var startDate = moment(request.query.startDate,'DD/MM/YYYY').toDate();
   var endDate   = moment(request.query.endDate,'DD/MM/YYYY').toDate();
 
-  var promiseATM;
-  var promiseMeeting;
-  var promiseEmail;
-  var allPromises = [];
-  console.log('query', request.query);
-  if (request.query.isATM == "true") {
-    console.log('isAtm Started' , request.query.isATM);
-    promiseATM = ATMDB.ATMData.getEvents(moment(request.query.startDate,'DD/MM/YYYY').toDate(),
-                                      moment(request.query.endDate,'DD/MM/YYYY').toDate(), db);
-    allPromises.push(promiseATM);
-  }
-  if (request.query.isMeeting == "true") {
+  console.log("***** filtering BY dates : " + startDate + "   -    " + endDate);
 
-  }
-  if (request.query.isEmail == "true"){
-    var promiseEmail = objMailDAL.mailDAL.getMailsByDates(db, startDate,endDate);
-    allPromises.push(promiseEmail);
-  }
-
-  if (allPromises.length > 0) {
-    Q.all(allPromises).then(function (results) {
-      console.log('=============results===========')
-      console.log(results);
-      console.log('=============results end ===========')
-      if (results !== undefined && results.length > 0) {
-        for (var i = 0; i < results.length; i++) {
-          var result = results[i];
-          console.log('=============result===========')
-          console.log(result);
-          console.log('=============result end ===========')
-          if (result !== undefined && result.length > 0) {
-            parentJson.timeline.date = parentJson.timeline.date.concat(result);
-          }
-        }
-
-        response.send(parentJson);
-      }
-      else {
-        response.sendStatus(500);
-      }
-    });
-  }
-  else
-    response.send(parentJson);
-
-  /*
-  objMailDAL.mailDAL.getMailsByDates(db, startDate,endDate).then(function (result)
+  objMailDAL.mailDAL.getMailsByDates(db, startDate,endDate).then(function (Events)
   {
-    console.log("res: " , result);
+      console.log("2 getMailsByDates then --------- ");
+      console.log("res getMailsByDates: ", Events);
 
-    parentJson.timeline.date = result;
-
-    console.log("parent: " , parentJson);
-
-    //response.send( parentJson );
-
+      if (Events != null) {
+          parentJson.timeline.date = Events;
+      }
 
   }).then(function(){
-    return ATMDB.ATMData.getEvents(moment(request.query.startDate,'DD/MM/YYYY').toDate(),
-        moment(request.query.endDate,'DD/MM/YYYY').toDate(), db);
-  }).then(function(Events) {
-    if (Events == null)
-      response.sendStatus(500);
-    else
-    {
+    var promise = ATMDB.ATMData.getEvents(startDate,endDate , db);
+    promise.then(function(Events) {
+        console.log("2 ATMData.getEvents then --------- ");
+        console.log("res ATMData: ", Events);
+      if (Events != null){
 
-      parentJson.timeline.date = parentJson.timeline.date.concat(Events);
-      console.log("parent: " , parentJson);
-      response.send(parentJson);
-    }
-  });
-  */
+          parentJson.timeline.date = parentJson.timeline.date.concat(Events);
+
+      }
+    });
+  }).then(function(){
+          meetingDBRepository.MeetingDBRepository.getAllMeetingsEvent(db, startDate,endDate).then(function (Events)
+          {
+              console.log("3 getAllMeetingsEvent then --------- ");
+              console.log("res getAllMeetingsEvent: ", Events);
+              if (Events != null) {
+                  parentJson.timeline.date = parentJson.timeline.date.concat(Events);
+              }
+
+              console.log("**** MERGED JSON: ", parentJson);
+              console.log("**** END MERGED JSON: ");
+              response.send(parentJson);
+
+          });
+
+      });
 });
 
 app.post('/Meetings' ,function(request,response){
@@ -128,50 +94,12 @@ app.post('/Meetings' ,function(request,response){
   var timelineStart = moment(request.query.startDate,'DD/MM/YYYY').format('YYYY,MM');
   var meetingJson =
 
-  {
-    timeline:
-    {
-      "headline":"באבא זמן",
-      "type":"default",
-      "startDate":timelineStart,
-      "text":"<i><span class='c1'>נתונים</span> & <span class='c2'>רועננו</span></i>",
-      "asset":
-      {
-        "media":"assets/img/baba_logo.png",
-        "credit":"",
-        "caption":""
-      },
-      "date": [
-
-        {
-          "startDate":"2012,5,1",
-          "headline":"2פגישה",
-          "text":"אירוע",
-          "asset": {
-            "media":"assets/img/meeting.jpg"
-          }
-        },
-        {
-          "startDate":"2012,6,1",
-          "headline":"1פגישה",
-          "text":"אירוע",
-          "asset": {
-            "media":"assets/img/meeting.jpg"
-          }
-        }
-      ]
-    }
-  };
-
-  console.log('got to server');
-
-  //db.collection("Meetings").insert(request.body);
-
-  meetingDBRepository.MeetingDBRepository.saveMeetingEvent(db,meetingJson);
+  meetingDBRepository.MeetingDBRepository.saveMeetingEvent(db,request.body);
 
   response.sendStatus(200);
 
 });
+
 app.get('/Meetings',function(request,response){
 
   console.log(request.query.startDate);
@@ -182,6 +110,16 @@ app.get('/Meetings',function(request,response){
   console.log(allMeetings);
 
   response.sendStatus(200);
+
+});
+
+app.delete('/Meetings',function(request,response){
+
+
+    meetingDBRepository.MeetingDBRepository.deleteAllMeetings(db).then(function () {
+
+        response.sendStatus(200);
+    });
 
 });
 

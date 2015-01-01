@@ -92,7 +92,7 @@ app.get('/TimeLineData', function(request, response){
 
 app.post('/Meetings' ,function(request,response){
 
-  var timelineStart = moment(request.query.startDate,'DD/MM/YYYY').format('YYYY,MM');
+  //var timelineStart = moment(request.query.startDate,'DD/MM/YYYY').format('YYYY,MM');
 
   meetingDBRepository.MeetingDBRepository.saveMeetingEvent(db,request.body);
 

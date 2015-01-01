@@ -93,6 +93,8 @@ app.get('/TimeLineData', function(request, response){
 app.post('/Meetings' ,function(request,response){
 
   var timelineStart = moment(request.query.startDate,'DD/MM/YYYY').format('YYYY,MM');
+    console.log("Test Date:" , request.query.startDate);
+  var meetingJson =
 
   meetingDBRepository.MeetingDBRepository.saveMeetingEvent(db,request.body);
 
@@ -236,6 +238,7 @@ app.post('/AddMail', function(request, response) {
         }
     };
 
+    console.log("Test Date : " + request.body.startDate);
 
     console.log("Add New Mail With Date : " + startDateInput);
     objMailDAL.mailDAL.saveMail(db,tmpNewMail);

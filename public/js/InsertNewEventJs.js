@@ -62,10 +62,6 @@ angular.module('app').controller('InsertCtrl', function($scope, $http, $location
             });
     };
 
-    $scope.getAllMails = function () {
-        //alert($scope.Event.startDate);
-        var formattedStartDate = $scope.Event.startDate.format('DD/MM/YYYY');
-        var formattedEndDate = $scope.Event.endDate.format('DD/MM/YYYY');
 
         $http.delete('/Meetings').
             success(function(data) {

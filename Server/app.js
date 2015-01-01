@@ -186,48 +186,59 @@ mongo.connect('mongodb://localhost/app', function(err, aDb) {
     "startDate":"2013,5,9",
     "headline":"9/5/2013<br>משיכת כסף מכספומט",
     "text":"אירוע2",
-    "asset":  "https://www.youtube.com/watch?v=WEza-xZMTWs"
+    "asset":
+     "https://www.youtube.com/watch?v=WEza-xZMTWs"
+
   };
     var tmpMail3= {
         "startDate":"2013,7,9",
         "headline":"9/7/2013<br>פגישה חשודה",
         "text":"אירוע2",
-        "asset": "assets/img/meeting.jpg"
+        "asset":
+           "assets/img/meeting.jpg"
+
     };
     var tmpMail4= {
         "startDate":"2013,9,9",
         "headline":"9/9/2013<br>שליחת דואר",
         "text":"אירוע2",
-        "asset": "assets/img/mail.jpg"
+        "asset":
+           "assets/img/mail.jpg"
+
     };
       var tmpMail5= {
         "startDate":"2009,5,9",
         "headline":"9/5/2009<br>משיכת כסף מכספומט",
         "text":"אירוע2",
         "asset": "https://www.youtube.com/watch?v=ghRijg1IJnU"
+
     };
   var tmpMail6= {
     "startDate":"2010,5,9",
     "headline":"9/5/2010<br>כניסה לחניון",
     "text":"חניון",
-    "asset": "assets/img/images.jpg"
+    "asset":
+       "assets/img/images.jpg"
+
   };
   var tmpMail7= {
     "startDate":"2011,5,9",
     "headline":"9/5/2011<br>כניסה לחניון",
     "text":"חניון",
-    "asset": "assets/img/images3U240V20.jpg"
+    "asset":
+       "assets/img/images3U240V20.jpg"
+
   };
 
   objMailDAL.mailDAL.deleteAllMails(db).then(function ()
       {
           objMailDAL.mailDAL.saveMail(db,tmpMail1);
-          objMailDAL.mailDAL.saveMail(db,tmpMail2);
-          objMailDAL.mailDAL.saveMail(db,tmpMail3);
+          ATMDB.ATMData.saveEvent(tmpMail2,db);
+          meetingDBRepository.MeetingDBRepository.saveMeetingEvent(db,tmpMail3);
           objMailDAL.mailDAL.saveMail(db,tmpMail4);
-          objMailDAL.mailDAL.saveMail(db,tmpMail5);
-          objMailDAL.mailDAL.saveMail(db,tmpMail6);
-          objMailDAL.mailDAL.saveMail(db,tmpMail7);
+          ATMDB.ATMData.saveEvent(tmpMail5,db);
+          meetingDBRepository.MeetingDBRepository.saveMeetingEvent(db,tmpMail6);
+          meetingDBRepository.MeetingDBRepository.saveMeetingEvent(db,tmpMail7);
       });
 
 

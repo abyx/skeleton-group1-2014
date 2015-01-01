@@ -239,7 +239,6 @@ mongo.connect('mongodb://localhost/app', function(err, aDb) {
           ATMDB.ATMData.saveEvent(tmpMail5,db);
           meetingDBRepository.MeetingDBRepository.saveMeetingEvent(db,tmpMail6);
           meetingDBRepository.MeetingDBRepository.saveMeetingEvent(db,tmpMail7);
-
       });
 
 

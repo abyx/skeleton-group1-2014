@@ -25,130 +25,11 @@ app.post('/example/:id', function(request, response) {
   response.sendStatus(200);
 });
 
-/*
-app.get('/TimeLineData', function(request, response){
-  var resJson = {
-    timeline:
-    {
-      "headline":"באבא זמן",
-      "type":"default",
-      "startDate":"2009,1",
-      "text":"<i><span class='c1'>באבא</span> & <span class='c2'>זמן</span></i>",
-      "asset":
-      {
-        "media":"assets/img/baba_logo.png",
-        "credit":"",
-        "caption":""
-      },
-      "date": [
-        {
-          "startDate":"2013,2,1",
-          "headline":"1/2/2013<br>משיכת כסף בכספומט",
-          "text":"אירוע",
-          "asset": {
-            "media": "assets/img/atm.png"
-          }
-        },
-        {
-          "startDate":"2013,4,2",
-          "headline":"2/4/2013<br>שליחת דואר",
-          "text":"אירוע",
-          "asset": {
-            "media":"assets/img/mail.jpg"
-          }
-        },
-        {
-          "startDate":"2013,5,1",
-          "headline":"פגישה",
-          "text":"אירוע",
-          "asset": {
-            "media":"assets/img/meeting.jpg"
-          }
-        },
-        {
-          "startDate":"2010,2,1",
-          "headline":"1/2/2013<br>משיכת כסף בכספומט",
-          "text":"אירוע",
-          "asset": {
-            "media": "assets/img/atm.png"
-          }
-        },
-        {
-          "startDate":"2009,5,1",
-          "headline":"פגישה",
-          "text":"אירוע",
-          "asset": {
-            "media":"assets/img/meeting.jpg"
-          }
-        }
-      ]
-    }
-  };
-  response.send(resJson);
-});
-*/
 
 app.get('/TimeLineData', function(request, response){
 
   var timelineStart = moment(request.query.startDate,'DD/MM/YYYY').format('YYYY,MM');
   console.log(timelineStart);
-  var resJson = {
-    timeline:
-    {
-      "headline":"באבא זמן",
-      "type":"default",
-      "startDate":timelineStart,
-      "text":"<i><span class='c1'>באבא</span> & <span class='c2'>זמן</span></i>",
-      "asset":
-      {
-        "media":"assets/img/baba_logo.png",
-        "credit":"",
-        "caption":""
-      },
-      "date": [
-        {
-          "startDate":"2013,2,1",
-          "headline":"1/2/2013<br>משיכת כסף בכספומט",
-          "text":"אירוע",
-          "asset": {
-            "media": "assets/img/atm.png"
-          }
-        },
-        {
-          "startDate":"2013,4,2",
-          "headline":"2/4/2013<br>שליחת דואר",
-          "text":"אירוע",
-          "asset": {
-            "media":"assets/img/mail.jpg"
-          }
-        },
-        {
-          "startDate":"2013,5,1",
-          "headline":"1/5/2013<br>פגישה",
-          "text":"אירוע",
-          "asset": {
-            "media":"assets/img/meeting.jpg"
-          }
-        },
-        {
-          "startDate":"2010,2,1",
-          "headline":"1/2/2013<br>משיכת כסף בכספומט",
-          "text":"אירוע",
-          "asset": {
-            "media": "assets/img/atm.png"
-          }
-        },
-        {
-          "startDate":"2009,5,1",
-          "headline":"1/5/2009<br>פגישה",
-          "text":"אירוע",
-          "asset": {
-            "media":"assets/img/meeting.jpg"
-          }
-        }
-      ]
-    }
-  };
 
   var parentJson = {
     timeline: {
@@ -178,14 +59,26 @@ app.get('/TimeLineData', function(request, response){
 
     console.log("parent: " , parentJson);
 
-    response.send( parentJson );
+    //response.send( parentJson );
 
 
+  }).then(function(){
+    console.log("2 then");
+    var promise = ATMDB.ATMData.getEvents(moment(request.query.startDate,'DD/MM/YYYY').toDate(),
+        moment(request.query.endDate,'DD/MM/YYYY').toDate(), db);
+
+    promise.then(function(Events) {
+      if (Events == null)
+        response.sendStatus(500);
+      else
+      {
+
+        parentJson.timeline.date = parentJson.timeline.date.concat(Events);
+        console.log("parent: " , parentJson);
+        response.send(parentJson);
+      }
+    });
   });
-
-
-
-
 });
 
 app.post('/Meetings' ,function(request,response){
@@ -315,11 +208,13 @@ mongo.connect('mongodb://localhost/app', function(err, aDb) {
 
 
 
+
 app.post('/InsertNewATMEvent', function(request, response) {
   var responseCode = ATMDB.ATMData.saveEvent(request.body, db);
   response.send(responseCode);
 });
 
+/*
 app.get('/TimeLineData', function(request, response){
 
   var timelineStart = moment(request.query.startDate,'DD/MM/YYYY').format('YYYY,MM');
@@ -357,3 +252,4 @@ app.get('/TimeLineData', function(request, response){
         }
       });
 });
+*/

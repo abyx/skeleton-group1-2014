@@ -7,6 +7,15 @@ function toTimeLineDate(date)
     return dateObj.getFullYear().toString() + ',' + (dateObj.getMonth() + 1).toString() + ',' + dateObj.getDay().toString();
 }
 
+
+function toNiceDate(date)
+{
+    //console.log('date', date);
+    var dateObj = new Date(date);
+    //console.log('dateObj',dateObj);
+    return date.getDay().toString(); + '/' + (date.getMonth() + 1).toString() + '/' + date.getFullYear().toString();
+}
+
 var ATMData = {
     getEvents: function(startDateQuery, endDateQuery, db) {
         console.log('getEvents - start');
@@ -19,8 +28,8 @@ var ATMData = {
                     var timelineEvent =
                     {
                         "startDate": toTimeLineDate(event.startDate),
-                        "headline": moment(new Date(event.startDate),'DD/MM/YYYY').format('DD/MM/YYYY') + "<br>" + event.text,
-                        "text": event.text,
+                        "headline": toNiceDate(event.startDate) + "<br>" + event.text,
+                        "text": " ",
                         "asset": {
                             "media": "assets/img/atm.png"
                         }

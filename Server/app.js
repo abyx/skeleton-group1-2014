@@ -50,42 +50,39 @@ app.get('/TimeLineData', function(request, response){
   var startDate =  moment(request.query.startDate,'DD/MM/YYYY').toDate();
   var endDate = moment(request.query.endDate,'DD/MM/YYYY').toDate();
 
-  console.log("filtering BY dates : " + startDate + "   -    " + endDate);
+  console.log("***** filtering BY dates : " + startDate + "   -    " + endDate);
 
   objMailDAL.mailDAL.getMailsByDates(db, startDate,endDate).then(function (Events)
   {
+      console.log("2 getMailsByDates then --------- ");
+      console.log("res getMailsByDates: ", Events);
+
       if (Events != null) {
-
-          console.log("res getMailsByDates: ", Events);
-
           parentJson.timeline.date = Events;
-
       }
 
   }).then(function(){
-    console.log("2 then");
     var promise = ATMDB.ATMData.getEvents(startDate,endDate , db);
-
     promise.then(function(Events) {
+        console.log("2 ATMData.getEvents then --------- ");
+        console.log("res ATMData: ", Events);
       if (Events != null){
-          console.log("res ATMData: ", Events);
 
           parentJson.timeline.date = parentJson.timeline.date.concat(Events);
 
       }
     });
   }).then(function(){
-          console.log("3 then");
-
           meetingDBRepository.MeetingDBRepository.getAllMeetingsEvent(db, startDate,endDate).then(function (Events)
           {
+              console.log("3 getAllMeetingsEvent then --------- ");
+              console.log("res getAllMeetingsEvent: ", Events);
               if (Events != null) {
-                  console.log("res getAllMeetingsEvent: ", Events);
-
                   parentJson.timeline.date = parentJson.timeline.date.concat(Events);
               }
 
-              console.log("parent: ", parentJson);
+              console.log("**** MERGED JSON: ", parentJson);
+              console.log("**** END MERGED JSON: ");
               response.send(parentJson);
 
           });

@@ -16,14 +16,11 @@ var MailDAL = {
 
         return Q.ninvoke(db.collection("MailEvents").find({startDate: {$gte: StartDate, $lte: EndDate}}), "toArray").then(
             function (result) {
-                console.log("********************** getMailsByDates ************************");
+                console.log("---getMailsByDates ");
 
                 result.filter(function(element)
                 { element.startDate = moment(element.startDate).format('YYYY,MM,DD');
                 });
-
-                console.log(result);
-                console.log("********************** getMailsByDates END ************************");
 
                 return result;
             }

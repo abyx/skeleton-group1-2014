@@ -7,14 +7,12 @@ var MeetingDBRepository = {
 
         return Q.ninvoke(db.collection("Meetings").find({startDate: {$gte: startDate, $lte: endDate}}), "toArray").then(
             function (result) {
-                console.log("********************** getAllMeetingsEvent ************************");
+                console.log("--- getAllMeetingsEvent");
 
                 result.filter(function (element) {
                     element.startDate = moment(element.startDate).format('YYYY,MM,DD');
                 });
 
-                console.log(result);
-                console.log("********************** getAllMeetingsEvent END ************************");
 
                 return result;
             }

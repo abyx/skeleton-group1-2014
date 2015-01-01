@@ -18,9 +18,11 @@ function toNiceDate(date)
 
 var ATMData = {
     getEvents: function(startDateQuery, endDateQuery, db) {
-        console.log('getEvents - start');
+
         return Q.ninvoke(db.collection('ATMEvents').find({ startDate: { '$gte' : startDateQuery, '$lt' : endDateQuery }}),	'toArray').then(
             function(Events) {
+                console.log('getAtmEvents - start');
+
                 var timelineEvents = [];
                 for (var i = 0; i < Events.length; i++) {
                     var event = Events[i];
@@ -28,16 +30,13 @@ var ATMData = {
                     var timelineEvent =
                     {
                         "startDate": toTimeLineDate(event.startDate),
-                        "headline": toNiceDate(event.startDate) + "<br>" + event.text,
-                        "text": " ",
-                        "asset": {
-                            "media": "assets/img/atm.png"
-                        }
+                        "headline": event.headline,
+                        "text": event.text,
+                        "asset": event.asset
                     };
 
                     timelineEvents.push(timelineEvent);
                 }
-                console.log('timelineEvents', timelineEvents);
                 return timelineEvents;
 
             }).fail(

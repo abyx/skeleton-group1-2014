@@ -42,7 +42,8 @@
                 "headline":"1/2/2013<br>משיכת כסף בכספומט",
                 "text":"אירוע",
                 "asset": {
-                    "media": "assets/img/atm.png"
+                  //  "media": "assets/img/cam10 15 08 2014 11 21 59 11 30 59 CAM10.mp4"
+                    "media":"https://www.youtube.com/watch?v=-uodXNd5HNE&spfreload=1"
                 }
             },
             {

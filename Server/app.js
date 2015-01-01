@@ -28,6 +28,7 @@ app.post('/example/:id', function(request, response) {
 
 app.get('/TimeLineData', function(request, response){
 
+  console.log( "------ /TimeLineData -----");
   var timelineStart = moment(request.query.startDate,'DD/MM/YYYY').format('YYYY,MM');
   console.log(timelineStart);
 
@@ -94,49 +95,48 @@ app.get('/TimeLineData', function(request, response){
 /*
   console.log("***** filtering BY dates : " + startDate + "   -    " + endDate);
 
-    objMailDAL.mailDAL.getMailsByDates(db, startDate,endDate).then(function (Events)
-    {
-        console.log("2 getMailsByDates then --------- ");
-        console.log("res getMailsByDates: ", Events);
+  objMailDAL.mailDAL.getMailsByDates(db, startDate,endDate).then(function (Events)
+  {
+      console.log("2 getMailsByDates then --------- ");
+      console.log("res getMailsByDates: ", Events);
 
-        if (Events != null) {
-            parentJson.timeline.date = Events;
-        }
+      if (Events != null) {
+          parentJson.timeline.date = Events;
+      }
 
-    }).then(function(){
-        var promise = ATMDB.ATMData.getEvents(startDate,endDate , db);
-        promise.then(function(Events) {
-            console.log("2 ATMData.getEvents then --------- ");
-            console.log("res ATMData: ", Events);
-            if (Events != null){
+  }).then(function(){
+    var promise = ATMDB.ATMData.getEvents(startDate,endDate , db);
+    promise.then(function(Events) {
+        console.log("2 ATMData.getEvents then --------- ");
+        console.log("res ATMData: ", Events);
+      if (Events != null){
 
-                parentJson.timeline.date = parentJson.timeline.date.concat(Events);
+          parentJson.timeline.date = parentJson.timeline.date.concat(Events);
 
-            }
-        });
-    }).then(function(){
-        meetingDBRepository.MeetingDBRepository.getAllMeetingsEvent(db, startDate,endDate).then(function (Events)
-        {
-            console.log("3 getAllMeetingsEvent then --------- ");
-            console.log("res getAllMeetingsEvent: ", Events);
-            if (Events != null) {
-                parentJson.timeline.date = parentJson.timeline.date.concat(Events);
-            }
-
-            console.log("**** MERGED JSON: ", parentJson);
-            console.log("**** END MERGED JSON: ");
-            response.send(parentJson);
-
-        });
-
+      }
     });
-    */
+  }).then(function(){
+          meetingDBRepository.MeetingDBRepository.getAllMeetingsEvent(db, startDate,endDate).then(function (Events)
+          {
+              console.log("3 getAllMeetingsEvent then --------- ");
+              console.log("res getAllMeetingsEvent: ", Events);
+              if (Events != null) {
+                  parentJson.timeline.date = parentJson.timeline.date.concat(Events);
+              }
+
+              console.log("**** MERGED JSON: ", parentJson);
+              console.log("**** END MERGED JSON: ");
+              response.send(parentJson);
+
+          });
+
+      });
+      */
 });
 
 app.post('/Meetings' ,function(request,response){
 
-  var timelineStart = moment(request.query.startDate,'DD/MM/YYYY').format('YYYY,MM');
-  var meetingJson =
+  //var timelineStart = moment(request.query.startDate,'DD/MM/YYYY').format('YYYY,MM');
 
   meetingDBRepository.MeetingDBRepository.saveMeetingEvent(db,request.body);
 
@@ -190,7 +190,8 @@ mongo.connect('mongodb://localhost/app', function(err, aDb) {
     "headline":"9/5/2013<br>משיכת כסף מכספומט",
     "text":"אירוע2",
     "asset": {
-      "media":"assets/img/atm.png"
+     // "media":"assets/img/atm.png"
+      "media":"https://www.youtube.com/watch?v=WEza-xZMTWs"
     }
   };
     var tmpMail3= {
@@ -206,17 +207,46 @@ mongo.connect('mongodb://localhost/app', function(err, aDb) {
         "headline":"9/9/2013<br>שליחת דואר",
         "text":"אירוע2",
         "asset": {
-            "media":"assets/img/mail.jpg"
+          "media": "assets/img/mail.jpg"
         }
     };
-
+      var tmpMail5= {
+        "startDate":"2009,5,9",
+        "headline":"9/5/2009<br>משיכת כסף מכספומט",
+        "text":"אירוע2",
+        "asset": {
+           // "media": "assets/img/atm.png"
+           "media":"https://www.youtube.com/watch?v=ghRijg1IJnU"
+        }
+    };
+  var tmpMail6= {
+    "startDate":"2010,5,9",
+    "headline":"9/5/2010<br>כניסה לחניון",
+    "text":"חניון",
+    "asset": {
+      "media": "assets/img/images.jpg"
+      // "media":"https://www.youtube.com/watch?v=WEza-xZMTWs"
+    }
+  };
+  var tmpMail7= {
+    "startDate":"2011,5,9",
+    "headline":"9/5/2011<br>כניסה לחניון",
+    "text":"חניון",
+    "asset": {
+      "media": "assets/img/images3U240V20.jpg"
+      // "media":"https://www.youtube.com/watch?v=WEza-xZMTWs"
+    }
+  };
 
   objMailDAL.mailDAL.deleteAllMails(db).then(function ()
       {
-        objMailDAL.mailDAL.saveMail(db,tmpMail1);
-        objMailDAL.mailDAL.saveMail(db,tmpMail2);
+          objMailDAL.mailDAL.saveMail(db,tmpMail1);
+          objMailDAL.mailDAL.saveMail(db,tmpMail2);
           objMailDAL.mailDAL.saveMail(db,tmpMail3);
           objMailDAL.mailDAL.saveMail(db,tmpMail4);
+          objMailDAL.mailDAL.saveMail(db,tmpMail5);
+          objMailDAL.mailDAL.saveMail(db,tmpMail6);
+          objMailDAL.mailDAL.saveMail(db,tmpMail7);
       });
 
 
@@ -230,7 +260,32 @@ mongo.connect('mongodb://localhost/app', function(err, aDb) {
   });
 });
 
+
+
+
 app.post('/InsertNewATMEvent', function(request, response) {
   var responseCode = ATMDB.ATMData.saveEvent(request.body, db);
   response.send(responseCode);
 });
+
+app.post('/AddMail', function(request, response) {
+    var startDateInput =   moment(request.query.startDate,'DD/MM/YYYY').format('YYYY,MM');
+    var startDateInput =   moment(request.body.startDate).format('YYYY,MM,DD');
+
+    var tmpNewMail= {
+        "startDate":startDateInput,
+        "headline":"2/4/2013<br>שליחת דואר",
+        "text":"אירוע חדש",
+        "asset": {
+            "media":"assets/img/mail.jpg"
+        }
+    };
+
+    objMailDAL.mailDAL.saveMail(db,tmpNewMail);
+    response.sendStatus(200);
+
+
+
+});
+
+

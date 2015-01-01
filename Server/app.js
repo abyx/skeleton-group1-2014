@@ -116,6 +116,16 @@ app.get('/Meetings',function(request,response){
 
 });
 
+app.delete('/Meetings',function(request,response){
+
+
+    meetingDBRepository.MeetingDBRepository.deleteAllMeetings(db).then(function () {
+
+        response.sendStatus(200);
+    });
+
+});
+
 mongo.connect('mongodb://localhost/app', function(err, aDb) {
   if (err) {
     throw err;

@@ -36,21 +36,17 @@ angular.module('app').controller('InsertCtrl', function($scope, $http, $location
     };
 
     $scope.addNewMeeting = function () {
-        alert($scope.Event.startDate);
         $http.post('/Meetings', $scope.Event).
             success(function(data) {
                 alert("Success");
             });
     };
 
-    $scope.getMeetings = function () {
-        //alert($scope.Event.startDate);
-        var formattedStartDate = $scope.Event.startDate.format('DD/MM/YYYY');
-        var formattedEndDate = $scope.Event.endDate.format('DD/MM/YYYY');
+    $scope.deleteMeetings = function () {
 
-        $http.get('/Meetings?startDate=' + formattedStartDate + '&endDate=' + formattedEndDate + '').
+        $http.delete('/Meetings').
             success(function(data) {
-                alert(data);
+                alert('המחיקה הושלמה')
             });
     };
 

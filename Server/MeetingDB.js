@@ -23,31 +23,39 @@ var MeetingDBRepository = {
                 console.log(err);
             }
         );
-   }
+    }
 
 
+    ,
 
-,
+    saveMeetingEvent: function (db, meetingEvent) {
+        meetingEvent.startDate = moment(meetingEvent.startDate, 'YYYY,MM,DD').toDate();
+        meetingEvent.headline =  moment(meetingEvent.startDate).format('DD/MM/YYYY') + " " + meetingEvent.headline;
+        meetingEvent.asset = {"media": "assets/img/meeting.jpg"};
 
-saveMeetingEvent: function (db, meetingEvent) {
-    meetingEvent.startDate = moment(meetingEvent.startDate, 'YYYY,MM,DD').toDate();
+        console.log("Added Meeting : " , meetingEvent);
 
-    meetingEvent.asset = { "media":"assets/img/meeting.jpg"};
+        db.collection('Meetings').insertOne(meetingEvent, function (err, result) {
 
-    db.collection('Meetings').insertOne(meetingEvent, function (err, result) {
+            if (err) {
+                console.log("Error occured" + err);
+                return;
+            }
 
-        if (err) {
-            console.log("Error occured" + err);
-            return;
-        }
+            var savedMeeting = result.ops[0];
+            console.log("savedMeeting: ", savedMeeting);
 
-        var savedMeeting = result.ops[0];
-        console.log("savedMeeting: ", savedMeeting);
+        })
+    },
 
-    })
-}
-}
-;
+    deleteAllMeetings: function (db) {
+
+        return Q.ninvoke(db.collection("Meetings"), "deleteMany", {});
+
+
+    }
+
+};
 
 module.exports = {
     MeetingDBRepository: MeetingDBRepository

@@ -1,53 +1,58 @@
-
+var moment = require('moment');
+var Q = require('q');
 
 var MeetingDBRepository = {
-    getAllMeetingsEvent: function(db,startDate,endDate) {
-        console.log("startDate:"+startDate);
+    getAllMeetingsEvent: function (db, startDate, endDate) {
+        console.log("startDate:" + startDate);
 
-        db.collection('Meetings').find({startDate:{$gte:startDate}, startDate:{$lte:endDate}}).toArray(function (err, allMeetings)
-        {
-            if (err) {
+        return Q.ninvoke(db.collection("Meetings").find({startDate: {$gte: startDate, $lte: endDate}}), "toArray").then(
+            function (result) {
+                console.log("--- getAllMeetingsEvent");
 
-                console.log("Error in getMeetings" + err)
+                result.filter(function (element) {
+                    element.startDate = moment(element.startDate).format('YYYY,MM,DD');
+                });
 
-                return;
 
+                return result;
             }
-
-            console.log("allMeetings"+allMeetings);
-            return allMeetings;
-
-    })
-
-        /*db.collection('Meetings').find({}).toArray(function (err, allMeetings)
-        {
-            if (err) {
-
-                console.log("Error in getMeetings" + err)
-
-                return;
-
+        ).fail(
+            function (err) {
+                console.log(err);
             }
+        );
+    }
 
-            console.log("allMeetings"+allMeetings);
-            return allMeetings;
 
-        })*/
-    },
+    ,
 
-    saveMeetingEvent: function(db,meetingEvent) {
-        db.collection('Meetings').insertOne(meetingEvent,function(err,result){
+    saveMeetingEvent: function (db, meetingEvent) {
+        meetingEvent.startDate = moment(meetingEvent.startDate, 'YYYY,MM,DD').toDate();
+        meetingEvent.headline =  moment(meetingEvent.startDate).format('DD/MM/YYYY') + " " + meetingEvent.headline;
+        meetingEvent.asset = {"media": "assets/img/meeting.jpg"};
 
-          if(err) {
-              console.log("Error occured" + err);
-              return;
-          }
+        console.log("Added Meeting : " , meetingEvent);
+
+        db.collection('Meetings').insertOne(meetingEvent, function (err, result) {
+
+            if (err) {
+                console.log("Error occured" + err);
+                return;
+            }
 
             var savedMeeting = result.ops[0];
-            console.log("savedMeeting" + savedMeeting);
+            console.log("savedMeeting: ", savedMeeting);
 
         })
+    },
+
+    deleteAllMeetings: function (db) {
+
+        return Q.ninvoke(db.collection("Meetings"), "deleteMany", {});
+
+
     }
+
 };
 
 module.exports = {

@@ -14,14 +14,15 @@ angular.module('app').controller('InsertCtrl', function($scope, $http, $location
             {
                 format: 'DD/MM/YYYY',
                 startDate: moment().subtract(180,'days').toDate(),
-                endDate: moment().toDate()
+                endDate: moment().toDate(),
+                singleDatePicker : true
 
             }
         );
 
         $('#timeLineDatesRange').on('apply.daterangepicker', function(ev, picker) {
             $scope.Event.startDate = picker.startDate;
-            $scope.Event.endDate = picker.endDate;
+
 
         });
     });
@@ -35,21 +36,17 @@ angular.module('app').controller('InsertCtrl', function($scope, $http, $location
     };
 
     $scope.addNewMeeting = function () {
-        alert($scope.Event.startDate);
         $http.post('/Meetings', $scope.Event).
             success(function(data) {
                 alert("Success");
             });
     };
 
-    $scope.getMeetings = function () {
-        //alert($scope.Event.startDate);
-        var formattedStartDate = $scope.Event.startDate.format('DD/MM/YYYY');
-        var formattedEndDate = $scope.Event.endDate.format('DD/MM/YYYY');
+    $scope.deleteMeetings = function () {
 
-        $http.get('/Meetings?startDate=' + formattedStartDate + '&endDate=' + formattedEndDate + '').
+        $http.delete('/Meetings').
             success(function(data) {
-                alert(data);
+                alert('המחיקה הושלמה')
             });
     };
 

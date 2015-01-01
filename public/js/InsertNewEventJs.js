@@ -14,14 +14,15 @@ angular.module('app').controller('InsertCtrl', function($scope, $http, $location
             {
                 format: 'DD/MM/YYYY',
                 startDate: moment().subtract(180,'days').toDate(),
-                endDate: moment().toDate()
+                endDate: moment().toDate(),
+                singleDatePicker : true
 
             }
         );
 
         $('#timeLineDatesRange').on('apply.daterangepicker', function(ev, picker) {
             $scope.Event.startDate = picker.startDate;
-            $scope.Event.endDate = picker.endDate;
+
 
         });
     });

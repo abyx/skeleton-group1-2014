@@ -31,6 +31,9 @@ var MeetingDBRepository = {
 
 saveMeetingEvent: function (db, meetingEvent) {
     meetingEvent.startDate = moment(meetingEvent.startDate, 'YYYY,MM,DD').toDate();
+
+    meetingEvent.asset = { "media":"assets/img/meeting.jpg"};
+
     db.collection('Meetings').insertOne(meetingEvent, function (err, result) {
 
         if (err) {
@@ -39,7 +42,7 @@ saveMeetingEvent: function (db, meetingEvent) {
         }
 
         var savedMeeting = result.ops[0];
-        console.log("savedMeeting" + savedMeeting);
+        console.log("savedMeeting: ", savedMeeting);
 
     })
 }

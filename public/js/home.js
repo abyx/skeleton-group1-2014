@@ -1,11 +1,6 @@
-angular.module('app').factory('getDataForTimeLine', function(){
-  return [
-    { Event:"Zuk is waiking up early", Date:"11/12/2014" },
-    { Event:"Zuk is sleeping", Date:"14/12/2014"}];
-});
-
-angular.module('app').controller('HomeCtrl',function($scope, getDataForTimeLine) {
+angular.module('app').controller('HomeCtrl',function($scope) {
   $scope.greeting = 'World';
+  $scope.query = {};
 
   $scope.model = {
     text: ''
@@ -29,24 +24,23 @@ angular.module('app').controller('HomeCtrl',function($scope, getDataForTimeLine)
     );
 
     $('#timeLineDatesRange').on('apply.daterangepicker', function(ev, picker) {
-      $scope.startDate = picker.startDate;
-      $scope.endDate = picker.endDate;
-
+      $scope.query.startDate = picker.startDate;
+      $scope.query.endDate = picker.endDate;
     });
   });
 
   $scope.UpdateTimeline= function() {
     document.getElementById('TimeLineIframe').contentWindow.location.reload();
     setTimeout(function(){
-      document.getElementById('TimeLineIframe').contentWindow.InitTimeLine($scope.startDate, $scope.endDate);
+      document.getElementById('TimeLineIframe').contentWindow.InitTimeLine($scope.query);
 
     }, 1000);
 
   };
 
   $scope.validation=function() {
-    if ($scope.startDate != undefined && $scope.endDate != undefined) {
-      if ($scope.startDate > $scope.endDate) {
+    if ($scope.query.startDate != undefined && $scope.query.endDate != undefined) {
+      if ($scope.query.startDate > $scope.query.endDate) {
         $scope.errorMsg = 'The end date cannot be earlier than the start date !'
       }
       else
@@ -58,22 +52,22 @@ angular.module('app').controller('HomeCtrl',function($scope, getDataForTimeLine)
 
 
   $scope.dateChanged=function() {
-    $scope.startDate = $('#timeLineDatesRange').startDate;
-    $scope.endDate = $('#timeLineDatesRange').endDate;
+    $scope.query.startDate = $('#timeLineDatesRange').startDate;
+    $scope.query.endDate = $('#timeLineDatesRange').endDate;
 
-    if ($scope.startDate != undefined && $scope.endDate != undefined) {
-      if ($scope.startDate > $scope.endDate) {
+    if ($scope.query.startDate != undefined && $scope.query.endDate != undefined) {
+      if ($scope.query.startDate > $scope.query.endDate) {
         $scope.errorMsg = 'The end date cannot be earlier than the start date !'
       }
       else
       {
         $scope.errorMsg = "";
 
-        var startDate = $scope.startDate.getFullYear().toString() + ',' + ($scope.startDate.getMonth() + 1).toString() + ',' +$scope.startDate.getDate().toString();
-        var endDate = $scope.endDate.getFullYear().toString() + ',' + ($scope.endDate.getMonth() + 1).toString() + ',' +$scope.endDate.getDate().toString();
+        var startDate = $scope.query.startDate.getFullYear().toString() + ',' + ($scope.query.startDate.getMonth() + 1).toString() + ',' +$scope.query.startDate.getDate().toString();
+        var endDate = $scope.query.endDate.getFullYear().toString() + ',' + ($scope.query.endDate.getMonth() + 1).toString() + ',' +$scope.query.endDate.getDate().toString();
 
         // Get date and init timeline
-        document.getElementById('TimeLineIframe').contentWindow.InitTimeLine(startDate, endDate);
+        document.getElementById('TimeLineIframe').contentWindow.InitTimeLine($scope.query);
       }
     }
   }
@@ -85,11 +79,6 @@ angular.module('app').controller('HomeCtrl',function($scope, getDataForTimeLine)
       alert('Heya, ' + $scope.model.text);
     }
   };
-
-
-  $scope.TimeLineData = getDataForTimeLine;
-  //alert($scope.TimeLineData[0].Event);
-
 })
     .filter('betweenDate', function() {
       return function (items, startDate, endDate) {

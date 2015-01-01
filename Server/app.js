@@ -186,44 +186,31 @@ mongo.connect('mongodb://localhost/app', function(err, aDb) {
     "startDate":"2013,5,9",
     "headline":"9/5/2013<br>משיכת כסף מכספומט",
     "text":"אירוע2",
-    "asset": {
-     // "media":"assets/img/atm.png"
-      "media":"https://www.youtube.com/watch?v=WEza-xZMTWs"
-    }
+    "asset":  "https://www.youtube.com/watch?v=WEza-xZMTWs"
   };
     var tmpMail3= {
         "startDate":"2013,7,9",
         "headline":"9/7/2013<br>פגישה חשודה",
         "text":"אירוע2",
-        "asset": {
-            "media":"assets/img/meeting.jpg"
-        }
+        "asset": "assets/img/meeting.jpg"
     };
     var tmpMail4= {
         "startDate":"2013,9,9",
         "headline":"9/9/2013<br>שליחת דואר",
         "text":"אירוע2",
-        "asset": {
-          "media": "assets/img/mail.jpg"
-        }
+        "asset": "assets/img/mail.jpg"
     };
       var tmpMail5= {
         "startDate":"2009,5,9",
         "headline":"9/5/2009<br>משיכת כסף מכספומט",
         "text":"אירוע2",
-        "asset": {
-           // "media": "assets/img/atm.png"
-           "media":"https://www.youtube.com/watch?v=ghRijg1IJnU"
-        }
+        "asset": "https://www.youtube.com/watch?v=ghRijg1IJnU"
     };
   var tmpMail6= {
     "startDate":"2010,5,9",
     "headline":"9/5/2010<br>כניסה לחניון",
     "text":"חניון",
-    "asset": {
-      "media": "assets/img/images.jpg"
-      // "media":"https://www.youtube.com/watch?v=WEza-xZMTWs"
-    }
+    "asset": "assets/img/images.jpg"
   };
   var tmpMail7= {
     "startDate":"2011,5,9",

@@ -29,7 +29,14 @@ var MeetingDBRepository = {
     saveMeetingEvent: function (db, meetingEvent) {
         meetingEvent.startDate = moment(meetingEvent.startDate, 'YYYY,MM,DD').toDate();
         meetingEvent.headline =  moment(meetingEvent.startDate).format('DD/MM/YYYY') + " " + meetingEvent.headline;
-        meetingEvent.asset = {"media": meetingEvent.asset};
+
+        if ( meetingEvent.asset == null || meetingEvent.asset == undefined)
+        {
+            meetingEvent.asset = {"media": "assets/img/meeting.jpg"};
+        }
+        else {
+            meetingEvent.asset = {"media": meetingEvent.asset};
+        }
 
         console.log("Added Meeting : " , meetingEvent);
 

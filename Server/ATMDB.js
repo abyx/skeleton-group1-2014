@@ -50,7 +50,14 @@ var ATMData = {
     saveEvent: function(event, db) {
         event.startDate = new Date(event.startDate);
         event.headline =  moment(event.startDate).format('DD/MM/YYYY') + " " + event.headline;
-        event.asset = {"media": event.asset};
+
+        if ( event.asset == null || event.asset == undefined)
+        {
+            event.asset = {"media": "assets/img/atm.png"};
+        }
+        else {
+            event.asset = {"media": event.asset};
+        }
 
         console.log("Added ATM : " , event);
 

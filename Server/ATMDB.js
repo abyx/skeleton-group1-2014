@@ -29,7 +29,7 @@ var ATMData = {
 
                     var timelineEvent =
                     {
-                        "startDate": toTimeLineDate(event.startDate),
+                        "startDate":  moment(event.startDate).format('YYYY,MM,DD'),
                         "headline": event.headline,
                         "text": event.text,
                         "asset": event.asset

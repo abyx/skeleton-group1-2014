@@ -10,13 +10,14 @@ $(function(){
 
 
 
-function InitTimeLine(startDate, endDate){
+function InitTimeLine(query){
 	setTimeout(function(){
 		timeline = new VMM.Timeline();
-     	var formattedStartDate = startDate.format('DD/MM/YYYY');
-		var formattedEndDate = endDate.format('DD/MM/YYYY');
+     	var formattedStartDate = query.startDate.format('DD/MM/YYYY');
+		var formattedEndDate = query.endDate.format('DD/MM/YYYY');
 		if (timeline != null) {
-			timeline.init("/TimeLineData?startDate='" + formattedStartDate + "'&endDate='" + formattedEndDate + "'");
+			timeline.init("/TimeLineData?startDate='" + formattedStartDate + "'&endDate='" + formattedEndDate +
+			              "'&isATM=" + query.isATM + "&isMeeting=" + query.isMeeting + "&isEmail=" + query.isEmail);
 		}
 	}, 1000);
 

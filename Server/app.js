@@ -37,7 +37,7 @@ app.get('/TimeLineData', function(request, response){
       "headline": "באבא זמן",
       "type": "default",
       "startDate": timelineStart,
-      "text": "<i><span class='c1'>באבא</span> & <span class='c2'>זמן</span></i>",
+      "text": "<i><span class='c1'>חווית המסע בזמן</span></i>",
       "asset": {
         "media": "assets/img/baba_logo.png",
         "credit": "",
@@ -47,9 +47,52 @@ app.get('/TimeLineData', function(request, response){
     }
     };
 
-  var startDate =  moment(request.query.startDate,'DD/MM/YYYY').toDate();
-  var endDate = moment(request.query.endDate,'DD/MM/YYYY').toDate();
+    var startDate = moment(request.query.startDate,'DD/MM/YYYY').toDate();
+    var endDate   = moment(request.query.endDate,'DD/MM/YYYY').toDate();
 
+    var promiseATM;
+    var promiseMeeting;
+    var promiseEmail;
+    var allPromises = [];
+    if (request.query.isATM == "true") {
+        promiseATM =  ATMDB.ATMData.getEvents(startDate,endDate , db);
+        allPromises.push(promiseATM);
+    }
+    if (request.query.isMeeting == "true") {
+        promiseMeeting = meetingDBRepository.MeetingDBRepository.getAllMeetingsEvent(db, startDate,endDate);
+        allPromises.push(promiseMeeting);
+    }
+    if (request.query.isEmail == "true"){
+        var promiseEmail = objMailDAL.mailDAL.getMailsByDates(db, startDate,endDate);
+        allPromises.push(promiseEmail);
+    }
+
+    if (allPromises.length > 0) {
+        Q.all(allPromises).then(function (results) {
+            console.log('=============results===========')
+            console.log(results);
+            console.log('=============results end ===========')
+            if (results !== undefined && results.length > 0) {
+                for (var i = 0; i < results.length; i++) {
+                    var result = results[i];
+                    console.log('=============result===========')
+                    console.log(result);
+                    console.log('=============result end ===========')
+                    if (result !== undefined && result.length > 0) {
+                        parentJson.timeline.date = parentJson.timeline.date.concat(result);
+                    }
+                }
+
+                response.send(parentJson);
+            }
+            else {
+                response.sendStatus(500);
+            }
+        });
+    }
+    else
+        response.send(parentJson);
+/*
   console.log("***** filtering BY dates : " + startDate + "   -    " + endDate);
 
   objMailDAL.mailDAL.getMailsByDates(db, startDate,endDate).then(function (Events)
@@ -88,6 +131,7 @@ app.get('/TimeLineData', function(request, response){
           });
 
       });
+      */
 });
 
 app.post('/Meetings' ,function(request,response){

@@ -1,6 +1,5 @@
-<form class="form-horizontal">
-    <fieldset>
-        <div class="control-group" >
+<form class="form-horizontal" role="form" class="simple-form">
+        <div>
             <div class="controls">
                 <div class="input-prepend input-group">
                         <span class="add-on input-group-addon">
@@ -11,7 +10,17 @@
                 </div>
             </div>
         </div>
-    </fieldset>
+        <div class="checkbox" name="ATMEvent" style="padding-left: 1px; margin-top: 8px;">
+            <label style="margin-right: 15px;">
+                <input type="checkbox" ng-init="query.isATM = true" ng-model="query.isATM"> ATM Event
+            </label>
+            <label style="margin-right: 15px;">
+                <input type="checkbox"  ng-init="query.isMeeting = true" ng-model="query.isMeeting"> Meeting Event
+            </label>
+            <label style="margin-right: 15px;">
+                <input type="checkbox" ng-init="query.isEmail = true"  ng-model="query.isEmail"> Email Event
+            </label>
+        </div>
 </form>
 
 <br>

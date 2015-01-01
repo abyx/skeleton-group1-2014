@@ -197,12 +197,13 @@ mongo.connect('mongodb://localhost/app', function(err, aDb) {
   objMailDAL.mailDAL.deleteAllMails(db).then(function ()
       {
           objMailDAL.mailDAL.saveMail(db,tmpMail1);
-          objMailDAL.mailDAL.saveMail(db,tmpMail2);
-          objMailDAL.mailDAL.saveMail(db,tmpMail3);
+          ATMDB.ATMData.saveEvent(tmpMail2,db);
+          meetingDBRepository.MeetingDBRepository.saveMeetingEvent(db,tmpMail3);
           objMailDAL.mailDAL.saveMail(db,tmpMail4);
-          objMailDAL.mailDAL.saveMail(db,tmpMail5);
-          objMailDAL.mailDAL.saveMail(db,tmpMail6);
-          objMailDAL.mailDAL.saveMail(db,tmpMail7);
+          ATMDB.ATMData.saveEvent(tmpMail5,db);
+          meetingDBRepository.MeetingDBRepository.saveMeetingEvent(db,tmpMail6);
+          meetingDBRepository.MeetingDBRepository.saveMeetingEvent(db,tmpMail7);
+
       });
 
 

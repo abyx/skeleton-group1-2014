@@ -77,6 +77,7 @@ app.get('/TimeLineData', function(request, response){
                     var result = results[i];
                     console.log('=============result===========')
                     console.log(result);
+                    console.log(result.asset );
                     console.log('=============result end ===========')
                     if (result !== undefined && result.length > 0) {
                         parentJson.timeline.date = parentJson.timeline.date.concat(result);
@@ -179,9 +180,7 @@ mongo.connect('mongodb://localhost/app', function(err, aDb) {
         "startDate":"2013,4,2",
        "headline":"2/4/2013<br>שליחת דואר",
         "text":"אירוע1",
-        "asset": {
-         "media":"assets/img/mail.jpg"
-       }
+        "asset": "assets/img/mail.jpg"
       };
   var tmpMail2= {
     "startDate":"2013,5,9",
@@ -230,10 +229,7 @@ mongo.connect('mongodb://localhost/app', function(err, aDb) {
     "startDate":"2011,5,9",
     "headline":"9/5/2011<br>כניסה לחניון",
     "text":"חניון",
-    "asset": {
-      "media": "assets/img/images3U240V20.jpg"
-      // "media":"https://www.youtube.com/watch?v=WEza-xZMTWs"
-    }
+    "asset": "assets/img/images3U240V20.jpg"
   };
 
   objMailDAL.mailDAL.deleteAllMails(db).then(function ()
@@ -267,19 +263,17 @@ app.post('/InsertNewATMEvent', function(request, response) {
 });
 
 app.post('/AddMail', function(request, response) {
-    var startDateInput =   moment(request.query.startDate,'DD/MM/YYYY').format('YYYY,MM');
     var startDateInput =   moment(request.body.startDate).format('YYYY,MM,DD');
 
     var tmpNewMail= {
         "startDate":startDateInput,
-        "headline":"2/4/2013<br>שליחת דואר",
-        "text":"אירוע חדש",
-        "asset": {
-            "media":"assets/img/mail.jpg"
-        }
+        "headline":request.body.headline,
+        "text":request.body.text,
+        "asset": request.body.asset
     };
 
     objMailDAL.mailDAL.saveMail(db,tmpNewMail);
+
     response.sendStatus(200);
 
 

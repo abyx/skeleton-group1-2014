@@ -36,7 +36,7 @@ var MailDAL = {
     saveMail: function (db, event) {
         event.startDate = moment(event.startDate, 'YYYY,MM,DD').toDate();
         event.headline =  moment(event.startDate).format('DD/MM/YYYY') + " " + event.headline;
-        event.asset = {"media": "assets/img/mail.jpg"};
+        event.asset = {"media": event.asset};
 
         //console.log("Added Mail Event : " , event);
 

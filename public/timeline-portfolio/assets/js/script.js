@@ -19,4 +19,11 @@ function InitTimeLine(startDate, endDate){
 			timeline.init("/TimeLineData?startDate='" + formattedStartDate + "'&endDate='" + formattedEndDate + "'");
 		}
 	}, 1000);
+
+}
+
+function postMeeting (){
+
+
+
 }

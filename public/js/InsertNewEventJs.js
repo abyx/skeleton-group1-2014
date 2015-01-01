@@ -41,8 +41,35 @@ angular.module('app').controller('InsertCtrl', function($scope, $http, $location
                 alert("Success");
             });
     };
+    $scope.addNewMail = function () {
+        $http.post('/AddMail', $scope.Event).
+            success(function(data) {
+                alert("Success");
+            });
+    };
+
+
 
     $scope.deleteMeetings = function () {
+    $scope.addNewMail = function () {
+        alert($scope.Event.startDate);
+        $http.post('/AddMail', $scope.Event).
+            success(function(data) {
+                alert("Success");
+            });
+    };
+
+    $scope.getMeetings = function () {
+        //alert($scope.Event.startDate);
+        var formattedStartDate = $scope.Event.startDate.format('DD/MM/YYYY');
+        var formattedEndDate = $scope.Event.endDate.format('DD/MM/YYYY');
+
+        $http.get('/Meetings?startDate=' + formattedStartDate + '&endDate=' + formattedEndDate + '').
+            success(function(data) {
+                alert(data);
+            });
+    };
+
 
         $http.delete('/Meetings').
             success(function(data) {

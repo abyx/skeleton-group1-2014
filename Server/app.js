@@ -223,3 +223,25 @@ app.post('/InsertNewATMEvent', function(request, response) {
   var responseCode = ATMDB.ATMData.saveEvent(request.body, db);
   response.send(responseCode);
 });
+
+app.post('/AddMail', function(request, response) {
+    var startDateInput =   moment(request.query.startDate,'DD/MM/YYYY').format('YYYY,MM');
+    var startDateInput =   moment(request.body.startDate).format('YYYY,MM,DD');
+
+    var tmpNewMail= {
+        "startDate":startDateInput,
+        "headline":"2/4/2013<br>שליחת דואר",
+        "text":"אירוע חדש",
+        "asset": {
+            "media":"assets/img/mail.jpg"
+        }
+    };
+
+    objMailDAL.mailDAL.saveMail(db,tmpNewMail);
+    response.sendStatus(200);
+
+
+
+});
+
+

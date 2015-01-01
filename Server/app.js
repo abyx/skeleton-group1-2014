@@ -46,47 +46,91 @@ app.get('/TimeLineData', function(request, response){
     }
     };
 
-  var startDate = moment(request.query.startDate,'DD/MM/YYYY').toDate();
-  var endDate   = moment(request.query.endDate,'DD/MM/YYYY').toDate();
+    var startDate = moment(request.query.startDate,'DD/MM/YYYY').toDate();
+    var endDate   = moment(request.query.endDate,'DD/MM/YYYY').toDate();
 
+    var promiseATM;
+    var promiseMeeting;
+    var promiseEmail;
+    var allPromises = [];
+    if (request.query.isATM == "true") {
+        promiseATM =  ATMDB.ATMData.getEvents(startDate,endDate , db);
+        allPromises.push(promiseATM);
+    }
+    if (request.query.isMeeting == "true") {
+        promiseMeeting = meetingDBRepository.MeetingDBRepository.getAllMeetingsEvent(db, startDate,endDate);
+        allPromises.push(promiseMeeting);
+    }
+    if (request.query.isEmail == "true"){
+        var promiseEmail = objMailDAL.mailDAL.getMailsByDates(db, startDate,endDate);
+        allPromises.push(promiseEmail);
+    }
+
+    if (allPromises.length > 0) {
+        Q.all(allPromises).then(function (results) {
+            console.log('=============results===========')
+            console.log(results);
+            console.log('=============results end ===========')
+            if (results !== undefined && results.length > 0) {
+                for (var i = 0; i < results.length; i++) {
+                    var result = results[i];
+                    console.log('=============result===========')
+                    console.log(result);
+                    console.log('=============result end ===========')
+                    if (result !== undefined && result.length > 0) {
+                        parentJson.timeline.date = parentJson.timeline.date.concat(result);
+                    }
+                }
+
+                response.send(parentJson);
+            }
+            else {
+                response.sendStatus(500);
+            }
+        });
+    }
+    else
+        response.send(parentJson);
+/*
   console.log("***** filtering BY dates : " + startDate + "   -    " + endDate);
 
-  objMailDAL.mailDAL.getMailsByDates(db, startDate,endDate).then(function (Events)
-  {
-      console.log("2 getMailsByDates then --------- ");
-      console.log("res getMailsByDates: ", Events);
+    objMailDAL.mailDAL.getMailsByDates(db, startDate,endDate).then(function (Events)
+    {
+        console.log("2 getMailsByDates then --------- ");
+        console.log("res getMailsByDates: ", Events);
 
-      if (Events != null) {
-          parentJson.timeline.date = Events;
-      }
+        if (Events != null) {
+            parentJson.timeline.date = Events;
+        }
 
-  }).then(function(){
-    var promise = ATMDB.ATMData.getEvents(startDate,endDate , db);
-    promise.then(function(Events) {
-        console.log("2 ATMData.getEvents then --------- ");
-        console.log("res ATMData: ", Events);
-      if (Events != null){
+    }).then(function(){
+        var promise = ATMDB.ATMData.getEvents(startDate,endDate , db);
+        promise.then(function(Events) {
+            console.log("2 ATMData.getEvents then --------- ");
+            console.log("res ATMData: ", Events);
+            if (Events != null){
 
-          parentJson.timeline.date = parentJson.timeline.date.concat(Events);
+                parentJson.timeline.date = parentJson.timeline.date.concat(Events);
 
-      }
+            }
+        });
+    }).then(function(){
+        meetingDBRepository.MeetingDBRepository.getAllMeetingsEvent(db, startDate,endDate).then(function (Events)
+        {
+            console.log("3 getAllMeetingsEvent then --------- ");
+            console.log("res getAllMeetingsEvent: ", Events);
+            if (Events != null) {
+                parentJson.timeline.date = parentJson.timeline.date.concat(Events);
+            }
+
+            console.log("**** MERGED JSON: ", parentJson);
+            console.log("**** END MERGED JSON: ");
+            response.send(parentJson);
+
+        });
+
     });
-  }).then(function(){
-          meetingDBRepository.MeetingDBRepository.getAllMeetingsEvent(db, startDate,endDate).then(function (Events)
-          {
-              console.log("3 getAllMeetingsEvent then --------- ");
-              console.log("res getAllMeetingsEvent: ", Events);
-              if (Events != null) {
-                  parentJson.timeline.date = parentJson.timeline.date.concat(Events);
-              }
-
-              console.log("**** MERGED JSON: ", parentJson);
-              console.log("**** END MERGED JSON: ");
-              response.send(parentJson);
-
-          });
-
-      });
+    */
 });
 
 app.post('/Meetings' ,function(request,response){
@@ -185,9 +229,6 @@ mongo.connect('mongodb://localhost/app', function(err, aDb) {
     console.log(' [*] Listening at http://%s:%s', host, port);
   });
 });
-
-
-
 
 app.post('/InsertNewATMEvent', function(request, response) {
   var responseCode = ATMDB.ATMData.saveEvent(request.body, db);

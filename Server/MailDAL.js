@@ -44,8 +44,8 @@ var MailDAL = {
                 return;
             }
             var SavedInfo = result.ops[0];
-            console.log("saveMail Run");
-            console.log(result.ops[0]);
+            //console.log("saveMail Run");
+            //console.log(result.ops[0]);
         });
     },
 

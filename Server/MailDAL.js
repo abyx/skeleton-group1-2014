@@ -38,7 +38,7 @@ var MailDAL = {
         event.headline =  moment(event.startDate).format('DD/MM/YYYY') + " " + event.headline;
         event.asset = {"media": "assets/img/mail.jpg"};
 
-        console.log("Added Mail Event : " , event);
+        //console.log("Added Mail Event : " , event);
 
         db.collection("MailEvents").insertOne(event, function (err, result) {
             if (err) {
@@ -47,7 +47,7 @@ var MailDAL = {
             }
             var SavedInfo = result.ops[0];
             //console.log("saveMail Run");
-            //console.log(result.ops[0]);
+           console.log(result.ops[0]);
         });
     },
 

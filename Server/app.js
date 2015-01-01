@@ -228,6 +228,7 @@ app.post('/InsertNewATMEvent', function(request, response) {
 
 app.post('/AddMail', function(request, response) {
     var startDateInput =   moment(request.query.startDate,'DD/MM/YYYY').format('YYYY,MM');
+    var startDateInput =   moment(request.body.startDate).format('YYYY,MM,DD');
 
     var tmpNewMail= {
         "startDate":startDateInput,
@@ -238,9 +239,6 @@ app.post('/AddMail', function(request, response) {
         }
     };
 
-    console.log("Test Date : " + request.body.startDate);
-
-    console.log("Add New Mail With Date : " + startDateInput);
     objMailDAL.mailDAL.saveMail(db,tmpNewMail);
     response.sendStatus(200);
 

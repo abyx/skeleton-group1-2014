@@ -41,6 +41,14 @@ angular.module('app').controller('InsertCtrl', function($scope, $http, $location
                 alert("Success");
             });
     };
+    $scope.addNewMail = function () {
+        $http.post('/AddMail', $scope.Event).
+            success(function(data) {
+                alert("Success");
+            });
+    };
+
+
 
     $scope.deleteMeetings = function () {
     $scope.addNewMail = function () {

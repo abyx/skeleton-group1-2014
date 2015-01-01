@@ -50,7 +50,8 @@ var ATMData = {
     saveEvent: function(event, db) {
         event.startDate = new Date(event.startDate);
         event.headline =  moment(event.startDate).format('DD/MM/YYYY') + " " + event.headline;
-        event.asset = {"media": "assets/img/atm.png"};
+        event.asset = {"media": event.asset};
+
         console.log("Added ATM : " , event);
 
         Q.ninvoke(db.collection("ATMEvents").insert(event)).then(

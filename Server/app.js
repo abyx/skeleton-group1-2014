@@ -166,7 +166,8 @@ mongo.connect('mongodb://localhost/app', function(err, aDb) {
     "headline":"9/5/2013<br>משיכת כסף מכספומט",
     "text":"אירוע2",
     "asset": {
-      "media":"assets/img/atm.png"
+     // "media":"assets/img/atm.png"
+      "media":"https://www.youtube.com/watch?v=WEza-xZMTWs"
     }
   };
     var tmpMail3= {
@@ -182,17 +183,46 @@ mongo.connect('mongodb://localhost/app', function(err, aDb) {
         "headline":"9/9/2013<br>שליחת דואר",
         "text":"אירוע2",
         "asset": {
-            "media":"assets/img/mail.jpg"
+          "media": "assets/img/mail.jpg"
         }
     };
-
+      var tmpMail5= {
+        "startDate":"2009,5,9",
+        "headline":"9/5/2009<br>משיכת כסף מכספומט",
+        "text":"אירוע2",
+        "asset": {
+           // "media": "assets/img/atm.png"
+           "media":"https://www.youtube.com/watch?v=ghRijg1IJnU"
+        }
+    };
+  var tmpMail6= {
+    "startDate":"2010,5,9",
+    "headline":"9/5/2010<br>כניסה לחניון",
+    "text":"חניון",
+    "asset": {
+      "media": "assets/img/images.jpg"
+      // "media":"https://www.youtube.com/watch?v=WEza-xZMTWs"
+    }
+  };
+  var tmpMail7= {
+    "startDate":"2011,5,9",
+    "headline":"9/5/2011<br>כניסה לחניון",
+    "text":"חניון",
+    "asset": {
+      "media": "assets/img/images3U240V20.jpg"
+      // "media":"https://www.youtube.com/watch?v=WEza-xZMTWs"
+    }
+  };
 
   objMailDAL.mailDAL.deleteAllMails(db).then(function ()
       {
-        objMailDAL.mailDAL.saveMail(db,tmpMail1);
-        objMailDAL.mailDAL.saveMail(db,tmpMail2);
+          objMailDAL.mailDAL.saveMail(db,tmpMail1);
+          objMailDAL.mailDAL.saveMail(db,tmpMail2);
           objMailDAL.mailDAL.saveMail(db,tmpMail3);
           objMailDAL.mailDAL.saveMail(db,tmpMail4);
+          objMailDAL.mailDAL.saveMail(db,tmpMail5);
+          objMailDAL.mailDAL.saveMail(db,tmpMail6);
+          objMailDAL.mailDAL.saveMail(db,tmpMail7);
       });
 
 
